@@ -18,7 +18,7 @@ void menu() {
     printf("4 → Mudar mensagem do display\n");
     printf("5 → Printar valores dos registradores\n");
     printf("6 → Voltar registradores ao padrão\n");
-    printf("7 → Sair\n");
+    printf("0 → Sair\n");
 }
 
 void menuR0() {
@@ -29,7 +29,7 @@ void menuR0() {
     printf("3 → Alterar velocidade da mensagem\n");
     printf("4 → Ligar/Desligar led de operação\n");
     printf("5 → Alterar cor do led de status\n");
-    printf("6 → Sair\n");
+    printf("0 → Sair\n");
 }
 
 void menuR3() {
@@ -39,7 +39,7 @@ void menuR3() {
     printf("2 → Mudar temperatura\n");
     printf("3 → Verificar quantidade de repetições\n");
     printf("4 → Resetar quantidade de repetições\n");
-    printf("5 → Sair\n");
+    printf("0 → Sair\n");
 }
 
 void funcR0() {
@@ -86,10 +86,33 @@ void funcR0() {
             case 6: printf("\nSaindo...\n"); break;
             default: printf("\nInforme uma opção válida!\n"); break;
         }
-    } while(opc != 6);
+    } while(opc != 0);
 }
 
-void funcR3() {printf("Sem nada ainda");}
+void funcR3() {
+    int opc = 0, btLvl;
+    
+    do
+    {
+        menuR3();
+        scanf("\n%d", &opc);
+
+        switch (opc)
+        {
+        case 1:
+            printf("\nInforme o nível de bateria:");
+            printf("\nCrítico [00]\t Baixo [01]\t Médio [10]\t Alto[11]\n");
+            scanf("%d", &btLvl);
+            setBatteryLevel(btLvl);
+            break;
+        
+        default:
+            break;
+        }
+    } while (opc != 0);
+    
+
+}
 void displayColor() {printf("Sem nada ainda");}
 void changeDisplay() {printf("Sem nada ainda");}
 void printReg() {printf("Sem nada ainda");}
@@ -112,7 +135,7 @@ void opc() {
             case 7: printf("\nSaindo...\n"); break;
             default: printf("\nInforme uma opção válida!\n"); break;
         }
-    } while(opc != 7);
+    } while(opc != 0);
 }
 
 int main() {

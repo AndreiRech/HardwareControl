@@ -90,3 +90,23 @@ void setStatusLedColor(int *red, int *green, int *blue) {
     *r0 |= (*green > 0.5) << 11;
     *r0 |= (*blue > 0.5) << 12;
 }
+
+
+//  FUNÇÕES DO R1
+
+
+
+//  FUNÇÕES DO R2
+
+
+//  FUNÇÕES DO R3
+
+// R3(0-1)  Nível da bateria
+uint16_t getBatteryLevel() {return *r3 & 0x003;}    //mask 0x003 == 0011
+void setBatteryLevel(uint16_t batteryLevel) {
+    *r3 &= 0xFFFC;        //0xFFFC == 1111 1111 1111 1100  //limpa os dois primeiros bits
+    *r3 |= (batteryLevel & 0x0003); //faz um AND do (batterylevel) com (0000 0000 0000 0011)
+}
+ 
+
+
