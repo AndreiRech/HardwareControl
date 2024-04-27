@@ -66,7 +66,9 @@ void funcR0() {
                 
                 break;
             case 4: 
-                
+                printf("Deseja ligar [1] ou desligar [0]?\n");
+                scanf("%d", &value);
+                setOperationLedOnOff(value);
                 break;
             case 5: 
                 int red, green, blue;
@@ -132,7 +134,7 @@ void opc() {
             case 4: changeDisplay(); break;
             case 5: printReg(); break;
             case 6: resetReg(); break;
-            case 7: printf("\nSaindo...\n"); break;
+            case 0: printf("\nSaindo...\n"); break;
             default: printf("\nInforme uma opção válida!\n"); break;
         }
     } while(opc != 0);

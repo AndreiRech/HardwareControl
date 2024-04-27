@@ -78,8 +78,14 @@ uint16_t getDisplaySpeed() {}
 void setDisplaySpeed(int speed) {}
 
 // R0 (9) Liga/Desliga o LED de operação
-uint16_t getOperationLedOnd() {}
-void setOperationLedOn(int v) {}
+uint16_t getOperationLedOnOff() {}
+void setOperationLedOnOff(int v) {
+    if (v > 1 || v < 0) return;
+    //0x0200 == 0000 0010 0000 0000 
+    *r0 &= ~0x0200;
+    *r0 |= (v << 9) & 0x0200;
+
+}
 
 // R0 (10-12) Liga/Desliga o LED de status e define cor
 uint16_t getStatusLedColor() {return *r0 & 0x0E00;}

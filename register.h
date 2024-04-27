@@ -29,8 +29,8 @@ uint16_t getDisplaySpeed();
 void setDisplaySpeed(int speed);
 
 // OperationLedOn
-uint16_t getOperationLedOnd();
-void setOperationLedOn(int v);
+uint16_t getOperationLedOnOff();
+void setOperationLedOnOff(int v);
 
 // StatusLedColor
 uint16_t getStatusLedColor();
