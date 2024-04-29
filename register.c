@@ -85,54 +85,80 @@ int registers_release(void* map, int file_size, int fd) {
 }
 
 //  FUNÇÕES DO R0
-// R0 (0) Liga/Desliga o display
-uint16_t getDisplayOn() {return *r0 & 0x0001; }
+uint16_t getDisplayOn() {return *r0 & 0x01;}
 void setDisplayOn(int v) {
     if(v > 1 || v < 0) return;
     *r0 = v ? (*r0 | 0x01) : (*r0 & ~0x01);
 }
 
-// R0 (1-2) Selecionar o modo de exibição
 uint16_t getDisplayMode() {}
 void setDisplayMode(int mode) {}
 
-// R0 (3-8) Define velocidade de atualização do display em valores múltiplos de 100 milisegundos para modo de exibição não estático
-uint16_t getDisplaySpeed() {}
-void setDisplaySpeed(int speed) {}
+uint16_t getDisplaySpeed() {return (*r0 >> 3) & 0x3F;}
+void setDisplaySpeed(int speed) {
+    if (speed < 0 || speed > 63) return;
+    *r0 &= ~(0x3F << 3);
+    *r0 |= (speed & 0x3F) << 3;
+}
 
-// R0 (9) Liga/Desliga o LED de operação
-uint16_t getOperationLedOnOff() {}
+uint16_t getOperationLedOnOff() {return (*r0 >> 9) & 0x01;}
 void setOperationLedOnOff(int v) {
     if (v > 1 || v < 0) return;
     *r0 &= ~0x0200;
     *r0 |= (v << 9) & 0x0200;
-
 }
 
-// R0 (10-12) Liga/Desliga o LED de status e define cor
-uint16_t getStatusLedColor() {return *r0 & 0x0E00;}
+uint16_t getStatusLedColor() {return (*r0 >> 10) & 0x07;}
 void setStatusLedColor(int *red, int *green, int *blue) {
     if(*red>1 || *red<0 || *green>1 || *green<0 || *blue>1 || *blue<0) return;
 
-    *r0 |= (*red > 0.5) << 10;
+    *r0 &= ~(0x07 << 10);
+    *r0 |= (*blue > 0.5) << 10;
     *r0 |= (*green > 0.5) << 11;
-    *r0 |= (*blue > 0.5) << 12;
+    *r0 |= (*red > 0.5) << 12;  
 }
 
-
-//  FUNÇÕES DO R1
-
-
-//  FUNÇÕES DO R2
-
+//  FUNÇÕES DO R1/R2
+void getDisplayColor(uint8_t *r, uint8_t *g, uint8_t *b) {
+    *r = *r1 & 0xFF;
+    *g = (*r1 >> 8) & 0xFF;
+    *b = *r2 & 0xFF;
+}
+void setDisplayColor(uint8_t r, uint8_t g, uint8_t b) {
+    if(r > 255 || r < 0 || g > 255 || g < 0 || b > 255 || b < 0) return;
+    *r1 = r & 0xFF;
+    *r1 |= (g << 8) & 0xFF00;
+    *r2 = b & 0xFF;
+}
 
 //  FUNÇÕES DO R3
-// R3(0-1)  Nível da bateria
-uint16_t getBatteryLevel() {return *r3 & 0x003;}    //mask 0x003 == 0011
+uint16_t getBatteryLevel() {return *r3 & 0x3;}
 void setBatteryLevel(uint16_t batteryLevel) {
-    *r3 &= 0xFFFC;        //0xFFFC == 1111 1111 1111 1100  //limpa os dois primeiros bits
-    *r3 |= (batteryLevel & 0x0003); //faz um AND do (batterylevel) com (0000 0000 0000 0011)
+    *r3 &= 0xFFFC;       
+    *r3 |= (batteryLevel & 0x3); 
+
+    int red, green, blue;
+    int level = getBatteryLevel();
+    switch (level) {
+        case 0:
+            red = 1;
+            green = 0;
+            blue = 0;
+            break;
+        case 1:
+        case 2:
+            red = 1;
+            green = 1;
+            blue = 0;
+            break;
+        case 3:
+            red = 0;
+            green = 1;
+            blue = 0;
+            break;
+        default:
+            return;
+    }
+
+    setStatusLedColor(&red, &green, &blue);
 }
- 
-
-
