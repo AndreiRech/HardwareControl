@@ -50,20 +50,20 @@ Aqui está a lista de a fazeres do trabalho.
 
 - [X] Liga/Desliga o display
 - [ ] Selecionar o modo de exibição
-- [ ] Define velocidade de atualização do display em valores múltiplos de 100 milisegundos para modo de exibição não estático
+- [X] Define velocidade de atualização do display em valores múltiplos de 100 milisegundos para modo de exibição não estático
 - [X] Liga/Desliga o LED de operação
-- [ ] Liga/Desliga o LED de status e define cor
+- [X] Liga/Desliga o LED de status e define cor
 
 **REGISTRADOR 1/2**
 
-- [ ] Mudar cor do display 
+- [X] Mudar cor do display 
 
 **REGISTRADOR 3**
 
 - [X] Nível da bateria
 - [ ] Mudar temperatura
 - [ ] Verificar quantidade de repetições
-- [X] Resetar quantidade de repetições
+- [ ] Resetar quantidade de repetições
 
 **REGISTRADOR 4-15**
 
