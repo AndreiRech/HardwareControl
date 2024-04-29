@@ -12,6 +12,18 @@ unsigned short *r0;
 unsigned short *r1;
 unsigned short *r2;
 unsigned short *r3;
+unsigned short *r4;
+unsigned short *r5;
+unsigned short *r6;
+unsigned short *r7;
+unsigned short *r8;
+unsigned short *r9;
+unsigned short *r10;
+unsigned short *r11;
+unsigned short *r12;
+unsigned short *r13;
+unsigned short *r14;
+unsigned short *r15;
 
 #define FILE_PATH "registers.bin"
 #define FILE_SIZE 1024
@@ -41,6 +53,18 @@ char* registers_map(const char* file_path, int file_size, int* fd) {
     r1 = base_address + 0x01;
     r2 = base_address + 0x02;
     r3 = base_address + 0x03;
+    r4 = base_address + 0x04;
+    r5 = base_address + 0x05;
+    r6 = base_address + 0x06;
+    r7 = base_address + 0x07;
+    r8 = base_address + 0x08;
+    r9 = base_address + 0x09;
+    r10 = base_address + 0x0a;
+    r11 = base_address + 0x0b;
+    r12 = base_address + 0x0c;
+    r13 = base_address + 0x0d;
+    r14 = base_address + 0x0e;
+    r15 = base_address + 0x0f;
 
     return map;
 }
@@ -61,7 +85,6 @@ int registers_release(void* map, int file_size, int fd) {
 }
 
 //  FUNÇÕES DO R0
-
 // R0 (0) Liga/Desliga o display
 uint16_t getDisplayOn() {return *r0 & 0x0001; }
 void setDisplayOn(int v) {
@@ -81,7 +104,6 @@ void setDisplaySpeed(int speed) {}
 uint16_t getOperationLedOnOff() {}
 void setOperationLedOnOff(int v) {
     if (v > 1 || v < 0) return;
-    //0x0200 == 0000 0010 0000 0000 
     *r0 &= ~0x0200;
     *r0 |= (v << 9) & 0x0200;
 
@@ -101,12 +123,10 @@ void setStatusLedColor(int *red, int *green, int *blue) {
 //  FUNÇÕES DO R1
 
 
-
 //  FUNÇÕES DO R2
 
 
 //  FUNÇÕES DO R3
-
 // R3(0-1)  Nível da bateria
 uint16_t getBatteryLevel() {return *r3 & 0x003;}    //mask 0x003 == 0011
 void setBatteryLevel(uint16_t batteryLevel) {
