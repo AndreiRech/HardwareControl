@@ -1,18 +1,75 @@
+# ALUNOS
+
+- [Andrei Rech | 23102140](https://github.com/AndreiRech)  
+- [Eduardo Colla De Bastiani | ](https://github.com/eduardo-de-bastiani)
+- [Mariah Backes Freire | ](https://github.com/mariahbf)
+
 # INTRODUÇÃO
 
 Biblioteca para Controle de Hardware Através de Registradores Mapeados em Memória em C
 
-# COMO RODAR 
+# 🛠 PRÉ REQUISITOS
 
-1° passo:
-`gcc main.c register.c -o exec`
+É necessária a utilização de um sistema operacional baseado em Linux. Caso deseje acessar utilizando windows, recomenda-se a utilização do [WSL](https://learn.microsoft.com/pt-br/windows/wsl/install)
 
-2° passo:
-`./exec`
+# ⚙ INICIALIZAÇÃO
 
-3° passo:
-`./emualtor`
+- **EDIÇÃO**
 
-**Toda vez que fizer alguma alteração deve refazer o passo 1 e 2 para mostrar no terminal**
+Para podermos editar o projeto, é necessário abrir o terminal e digitar:
 
-# ALGUEM ARRUMA O RESTO KK
+```bash
+    gcc main.c register.c -o exec
+```
+
+```bash
+    ./exec
+```
+
+Em outro terminal, acesse o emulador, utilizando:
+
+```bash
+    ./emualtor
+```
+
+*Toda vez que fizer alguma alteração deve refazer os primeiros dois passos para mostrar no terminal*
+
+- **VISUALIZAÇÃO**
+
+Para visualizar o projeto, apenas utilize o comando a seguir:
+
+```bash
+    ./emualtor
+```
+
+# O QUE FAZER
+
+Aqui está a lista de a fazeres do trabalho.
+
+**REGISTRADOR 0**
+
+- [X] Liga/Desliga o display
+- [ ] Selecionar o modo de exibição
+- [ ] Define velocidade de atualização do display em valores múltiplos de 100 milisegundos para modo de exibição não estático
+- [X] Liga/Desliga o LED de operação
+- [ ] Liga/Desliga o LED de status e define cor
+
+**REGISTRADOR 1/2**
+
+- [ ] Mudar cor do display 
+
+**REGISTRADOR 3**
+
+- [X] Nível da bateria
+- [ ] Mudar temperatura
+- [ ] Verificar quantidade de repetições
+- [X] Resetar quantidade de repetições
+
+**REGISTRADOR 4-15**
+
+- [ ] Mudar mensagem do display
+
+**AUXILIARES**
+
+- [ ] Printar valores de todos os registradores
+- [ ] Voltar registradores ao padrão  
