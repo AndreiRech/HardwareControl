@@ -63,7 +63,7 @@ void setTemperature(int temperature);
 
 // DEFINIÇÃO DAS FUNÇÕES [ R4 - R15 ]
 // DisplayString
-void setDisplayString();
+void setDisplayString(const char *msg);
 void resetDisplayString();
 
 

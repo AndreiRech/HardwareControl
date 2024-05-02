@@ -120,8 +120,13 @@ void displayColor() {
     setDisplayColor(red, green, blue);
 }
 
+void changeDisplay() {
+    char msg[100];
+    printf("\nDigite a mensagem que deseja exibir no display: ");
+    scanf("%s", msg);
+    setDisplayString(msg);
+}
 
-void changeDisplay() {printf("Sem nada ainda");}
 void printReg() {printf("Sem nada ainda");}
 void resetReg() {printf("Sem nada ainda");}
 

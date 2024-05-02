@@ -6,6 +6,7 @@
 #include <sys/stat.h>
 #include <stdint.h>
 #include "register.h"
+#include <string.h>
 
 unsigned short *base_address = NULL;
 unsigned short *r0;
@@ -161,4 +162,18 @@ void setBatteryLevel(uint16_t batteryLevel) {
     }
 
     setStatusLedColor(&red, &green, &blue);
+}
+
+//  FUNÇÕES DO R4-R15
+void setDisplayString(const char *msg) {
+    int length = strlen(msg);  
+    resetDisplayString();
+
+    for (int i = 0; i < length; i++) {
+        *(r4 + i) = msg[i];
+    }
+}
+
+void resetDisplayString() {
+    memset(r4, 0, 12 * sizeof(unsigned short));
 }

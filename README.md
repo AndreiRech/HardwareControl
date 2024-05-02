@@ -29,7 +29,7 @@ Para podermos editar o projeto, é necessário abrir o terminal e digitar:
 Em outro terminal, acesse o emulador, utilizando:
 
 ```bash
-    ./emualtor
+    ./emulator
 ```
 
 *Toda vez que fizer alguma alteração deve refazer os primeiros dois passos para mostrar no terminal*
@@ -39,7 +39,7 @@ Em outro terminal, acesse o emulador, utilizando:
 Para visualizar o projeto, apenas utilize o comando a seguir:
 
 ```bash
-    ./emualtor
+    ./emulator
 ```
 
 # O QUE FAZER
