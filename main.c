@@ -35,11 +35,12 @@ void menuR0() {
 void menuR3() {
     printf("\n ---------- [ MENU - R3 ] ---------- \n");
     printf("Informe o que deseja fazer: \n");
-    printf("1 → Mudar nível de bateria\n");
-    printf("2 → Mudar temperatura\n");
-    printf("3 → Verificar quantidade de repetições\n");
-    printf("4 → Resetar quantidade de repetições\n");
-    printf("5 → Sair\n");
+    printf("1 → Mudar nível de bateria (indisponível)\n");
+    printf("2 → Verificar nível de bateria\n");
+    printf("3 → Mudar temperatura\n");
+    printf("4 → Verificar quantidade de repetições\n");
+    printf("5 → Resetar quantidade de repetições\n");
+    printf("6 → Sair\n");
 }
 
 void funcR0() {
@@ -102,10 +103,22 @@ void funcR3() {
                 scanf("%d", &value);
                 setBatteryLevel(value);
                 break;
-            case 5: printf("\nSaindo...\n"); break;
+
+            case 2:
+                printf("\nNível de bateria: %u\n", getBatteryLevel());  //%u retorna unsigned int
+                break;
+            
+            case 3:
+                printf("\nInforme a temperatura em graus Celcius [terceira casa decimal para valor com virgula]:\n");
+                scanf("%d", &value);
+                setTemperature(value);
+                break;
+                
+
+            case 6: printf("\nSaindo...\n"); break;
             default: printf("\nInforme uma opção válida!\n"); break;
         }
-    } while (opc != 5);
+    } while (opc != 6);
 }
 
 void displayColor() {

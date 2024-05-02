@@ -87,6 +87,7 @@ int registers_release(void* map, int file_size, int fd) {
 
 //  FUNÇÕES DO R0
 uint16_t getDisplayOn() {return *r0 & 0x01;}
+
 void setDisplayOn(int v) {
     if(v > 1 || v < 0) return;
     *r0 = v ? (*r0 | 0x01) : (*r0 & ~0x01);
@@ -110,6 +111,7 @@ void setOperationLedOnOff(int v) {
 }
 
 uint16_t getStatusLedColor() {return (*r0 >> 10) & 0x07;}
+
 void setStatusLedColor(int *red, int *green, int *blue) {
     if(*red>1 || *red<0 || *green>1 || *green<0 || *blue>1 || *blue<0) return;
 
@@ -134,6 +136,7 @@ void setDisplayColor(uint8_t r, uint8_t g, uint8_t b) {
 
 //  FUNÇÕES DO R3
 uint16_t getBatteryLevel() {return *r3 & 0x3;}
+
 void setBatteryLevel(uint16_t batteryLevel) {
     *r3 &= 0xFFFC;       
     *r3 |= (batteryLevel & 0x3); 
@@ -163,6 +166,44 @@ void setBatteryLevel(uint16_t batteryLevel) {
 
     setStatusLedColor(&red, &green, &blue);
 }
+
+int getTemperature(){
+
+    uint16_t maskedValue = (*r3 & 0xFFC0) >> 6;
+
+    int signBit = maskedValue & 0x0200;     //0x0200 == 0000 0010 0000 0000 [bit 9]
+
+    //converte o valor para int16_t [lida com valores negativos em complemento de 2]
+    int16_t temperature = (int16_t)(maskedValue & 0x01FF);    //0x01FF == 0000 0001 1111 1111
+
+    if (signBit){
+        temperature |= 0xFE00;    //0xFE00 == 1111 1110 0000 0000
+    }
+    
+    return temperature/10;
+    
+    
+}
+
+void setTemperature(int temperature){ 
+    int16_t tempValue;
+
+    
+    if( temperature >= 0 && temperature <= 999)
+    {
+        tempValue = (int16_t)(temperature);
+    }
+    else{   //temperatura negativa
+        tempValue = (int16_t)(-temperature);
+        tempValue = ~tempValue + 1; //complemento de dois [inverte os bits e soma 1]
+        tempValue |= 0x8000;    //0x8000 == 1000 0000 0000 0000 [adiciona bit de sinal]
+    }
+
+    *r3 &= ~(0xFFC0); //0xFFC0 == 1111 1111 1100 0000 [limpando bits 6-15]
+
+    *r3 |= (((uint16_t)tempValue) << 6) & 0xFFC0; //desloca tempValue para os bits 6-15 e faz um AND com a mascara, depois faz um OR com o registrador 
+}
+
 
 //  FUNÇÕES DO R4-R15
 void setDisplayString(const char *msg) {
