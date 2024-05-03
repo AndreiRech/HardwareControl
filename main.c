@@ -25,11 +25,16 @@ void menuR0() {
     printf("\n ---------- [ MENU - R0 ] ---------- \n");
     printf("Informe o que deseja fazer: \n");
     printf("1 → Ligar/Desligar display\n");
-    printf("2 → Trocar modo do display\n");
-    printf("3 → Alterar velocidade da mensagem\n");
-    printf("4 → Ligar/Desligar led de operação\n");
-    printf("5 → Alterar cor do led de status\n");
-    printf("6 → Sair\n");
+    printf("2 → Verificar situacao do display\n");
+    printf("3 → Trocar modo do display\n");
+    printf("4 → Verificar modo do display\n");
+    printf("5 → Alterar velocidade da mensagem\n");
+    printf("6 → Verificar velocidade da mensagem\n");
+    printf("7 → Ligar/Desligar led de operação\n");
+    printf("8 → Verificar situacao led de operacao\n");
+    printf("9 → Alterar cor do led de status\n");
+    printf("10 → Verificar cor led de status\n");
+    printf("11 → Sair\n");
 }
 
 void menuR3() {
@@ -52,28 +57,37 @@ void funcR0() {
         scanf("\n%d", &opc);
 
         switch(opc) {
-            case 1: 
+            case 1: //ligar/desligar display
                 printf("\nDeseja ligar [1] ou desligar [0]?\n"); 
                 scanf("%d", &value);
                 setDisplayOn(value);
                 break;
-            case 2: 
+            case 2: //verificar situacao do display
+                break;
+            case 3: //alterar modo do display
                 printf("\nSelecione o modo de exibição: \n");
                 printf("Estático [1]\nDeslizante [2]\nPiscante [3]\nDeslizante|Piscante [4]");
                 scanf("%d", &value);
                 setDisplayMode(value);
                 break;
-            case 3: 
+            case 4: //verificar modo do display
+                printf("Modo do display:%s\n", convertedGetDisplayMode());
+                break;
+            case 5: 
                 printf("\nInforme a nova velocidade de exibição (Valores entre 0-63): ");
                 scanf("%d", &value);
                 setDisplaySpeed(value);
                 break;
-            case 4: 
+            case 6: //verificar velocidade da mensagem 
+                break;
+            case 7: //ligar/desligar led de operacao
                 printf("\nDeseja ligar [1] ou desligar [0]?\n");
                 scanf("%d", &value);
                 setOperationLedOnOff(value);
                 break;
-            case 5: 
+            case 8: //verificar situacao led de operacao
+                break;
+            case 9: //alterar cor led de status
                 int red, green, blue;
                 printf("\nPara alterar a cor, informe [1] ou [0]:\n");
                 printf(" [ Vermelho ] = ");
@@ -84,10 +98,12 @@ void funcR0() {
                 scanf("%d", &blue);
                 setStatusLedColor(&red, &green, &blue);  
                 break;
-            case 6: printf("\nSaindo...\n"); break;
+            case 10: //verificar cor led de status
+                break;
+            case 11: printf("\nSaindo...\n"); break;
             default: printf("\nInforme uma opção válida!\n"); break;
         }
-    } while(opc != 6);
+    } while(opc != 11);
 }
 
 void funcR3() {

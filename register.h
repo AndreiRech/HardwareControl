@@ -22,6 +22,7 @@ void setDisplayOn(int v);
 
 // DisplayMode
 uint16_t getDisplayMode();
+const char* convertedGetDisplayMode();
 void setDisplayMode(int mode);
 
 // DisplaySpeed

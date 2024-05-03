@@ -93,7 +93,34 @@ void setDisplayOn(int v) {
     *r0 = v ? (*r0 | 0x01) : (*r0 & ~0x01);
 }
 
-uint16_t getDisplayMode() {}
+uint16_t getDisplayMode() {
+    return (*r0 & 0x0006) >> 1;    //0x0006 == 0000 0000 0000 0110
+
+}
+
+const char* convertedGetDisplayMode(){
+    int displayMode = getDisplayMode();
+    const char* displayModeString;
+
+    switch (displayMode) {
+        case 0b00: // Modo estático
+            displayModeString = "Static";
+            break;
+        case 0b01: // Modo deslizante
+            displayModeString = "Sliding";
+            break;
+        case 0b10: // Modo intermitente
+            displayModeString = "Flashing";
+            break;
+        case 0b11: // Modo deslizante e intermitente
+            displayModeString = "Sliding and Flashing";
+            break;
+        default:
+            displayModeString = "Unknown";
+            break;
+    }
+    return displayModeString;
+}
 void setDisplayMode(int mode) {}
 
 uint16_t getDisplaySpeed() {return (*r0 >> 3) & 0x3F;}
