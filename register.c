@@ -135,7 +135,36 @@ void setDisplayColor(uint8_t r, uint8_t g, uint8_t b) {
 }
 
 //  FUNÇÕES DO R3
-uint16_t getBatteryLevel() {return *r3 & 0x3;}
+uint16_t getBatteryLevel(){
+    return *r3 & 0x3;
+}
+
+const char* convertedGetBatteryLevel() {
+    int batteryLevel = getBatteryLevel();
+    const char* batteryString;
+
+    switch (batteryLevel)
+    {
+    case 0:
+        batteryString = "critical";
+        break;
+    case 1:
+        batteryString = "low";
+        break;
+    case 2:
+        batteryString = "medium";
+        break;
+    case 3:
+        batteryString = "high";
+        break;
+    default:
+        break;
+    }
+
+    return batteryString;
+ 
+
+}
 
 void setBatteryLevel(uint16_t batteryLevel) {
     *r3 &= 0xFFFC;       
@@ -167,7 +196,7 @@ void setBatteryLevel(uint16_t batteryLevel) {
     setStatusLedColor(&red, &green, &blue);
 }
 
-int getTemperature(){
+float getTemperature(){
 
     uint16_t maskedValue = (*r3 & 0xFFC0) >> 6;
 
@@ -180,7 +209,9 @@ int getTemperature(){
         temperature |= 0xFE00;    //0xFE00 == 1111 1110 0000 0000
     }
     
-    return temperature/10;
+    float tempFloat = (float)temperature/10;
+
+    return tempFloat;
     
     
 }

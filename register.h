@@ -49,6 +49,7 @@ void setDisplayColor(uint8_t r, uint8_t g, uint8_t b);
 // DEFINIÇÃO DAS FUNÇÕES [ R3 ]
 // BateryLevel
 uint16_t getBatteryLevel();
+const char* convertedGetBatteryLevel();
 void setBatteryLevel(uint16_t level);
 
 // DisplayCount
@@ -57,7 +58,7 @@ void restartDisplayCount();
 void increaseDisplayCount();
 
 // Temperature
-int getTemperature();
+float getTemperature();
 void setTemperature(int temperature);
 
 
