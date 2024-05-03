@@ -49,10 +49,15 @@ Aqui está a lista de a fazeres do trabalho.
 **REGISTRADOR 0**
 
 - [X] Liga/Desliga o display
+- [ ] Verificar situacao do display
 - [ ] Selecionar o modo de exibição
+- [ ] verificar modo de exibicao
 - [X] Define velocidade de atualização do display em valores múltiplos de 100 milisegundos para modo de exibição não estático
+- [ ] verifica velocidade de atualizacao
 - [X] Liga/Desliga o LED de operação
+- [ ] verifica situacao led de operacao
 - [X] Liga/Desliga o LED de status e define cor
+- [ ] verifica cor led de status
 
 **REGISTRADOR 1/2**
 
