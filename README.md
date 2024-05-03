@@ -1,7 +1,7 @@
 # ALUNOS
 
 - [Andrei Rech | 23102140](https://github.com/AndreiRech)  
-- [Eduardo Colla De Bastiani | ](https://github.com/eduardo-de-bastiani)
+- [Eduardo Colla De Bastiani | 23106295](https://github.com/eduardo-de-bastiani)
 - [Mariah Backes Freire | ](https://github.com/mariahbf)
 
 # INTRODUÇÃO
@@ -60,8 +60,10 @@ Aqui está a lista de a fazeres do trabalho.
 
 **REGISTRADOR 3**
 
-- [X] Nível da bateria
-- [ ] Mudar temperatura
+- [X] Retornar nível da bateria
+- [X] Dewfinir nivel da bateria (opcional)
+- [X] Retornar nível bateria
+- [] Mudar temperatura (opcional)
 - [ ] Verificar quantidade de repetições
 - [ ] Resetar quantidade de repetições
 
