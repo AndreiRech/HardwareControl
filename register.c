@@ -87,58 +87,107 @@ int registers_release(void* map, int file_size, int fd) {
 
 //  FUNÇÕES DO R0
 uint16_t getDisplayOn() {return *r0 & 0x01;}
+const char* convertedGetDisplayOn(){
+    int displayOn = getDisplayOn();
 
+    if (displayOn == 1)
+    {
+        return "Display On";
+    }
+    return "Display Off";
+
+    
+}
 void setDisplayOn(int v) {
     if(v > 1 || v < 0) return;
     *r0 = v ? (*r0 | 0x01) : (*r0 & ~0x01);
 }
 
-uint16_t getDisplayMode() {
-    return (*r0 & 0x0006) >> 1;    //0x0006 == 0000 0000 0000 0110
 
-}
+
+uint16_t getDisplayMode() {return (*r0 & 0x0006) >> 1;}   //0x0006 == 0000 0000 0000 0110
 
 const char* convertedGetDisplayMode(){
     int displayMode = getDisplayMode();
-    const char* displayModeString;
 
     switch (displayMode) {
         case 0b00: // Modo estático
-            displayModeString = "Static";
+            return "Static";
             break;
         case 0b01: // Modo deslizante
-            displayModeString = "Sliding";
+            return "Sliding";
             break;
         case 0b10: // Modo intermitente
-            displayModeString = "Flashing";
+            return "Flashing";
             break;
         case 0b11: // Modo deslizante e intermitente
-            displayModeString = "Sliding and Flashing";
+            return "Sliding and Flashing";
             break;
         default:
-            displayModeString = "Unknown";
             break;
     }
-    return displayModeString;
 }
 void setDisplayMode(int mode) {}
 
+
+
 uint16_t getDisplaySpeed() {return (*r0 >> 3) & 0x3F;}
+const char* convertedGetDisplaySpeed(){
+    int displaySpeed = getDisplaySpeed();
+
+    static char displaySpeedString[7];  //aceita no maximo 5 caracteres + 'ms'
+
+    snprintf(displaySpeedString, sizeof(displaySpeedString), "%d ms", displaySpeed * 100);
+
+    return displaySpeedString;
+}
 void setDisplaySpeed(int speed) {
     if (speed < 0 || speed > 63) return;
     *r0 &= ~(0x3F << 3);
     *r0 |= (speed & 0x3F) << 3;
 }
 
-uint16_t getOperationLedOnOff() {return (*r0 >> 9) & 0x01;}
-void setOperationLedOnOff(int v) {
+
+
+uint16_t getOperationLedOn() {return (*r0 >> 9) & 0x01;}
+const char* convertedGetOperationLedOn(){
+    int operationLed = getOperationLedOn();
+
+    if(operationLed == 1){
+        return "LED On";
+    }
+    return "LED Off";
+}
+void setOperationLedOn(int v) {
     if (v > 1 || v < 0) return;
     *r0 &= ~0x0200;
     *r0 |= (v << 9) & 0x0200;
 }
 
-uint16_t getStatusLedColor() {return (*r0 >> 10) & 0x07;}
 
+
+uint16_t getStatusLedColor() {return (*r0 >> 10) & 0x07;}
+const char* convertedGetStatusLedColor(){
+    // 4 - vermelho     2 - verde  //6 - amarelo
+    int statusColor = getStatusLedColor();
+
+    switch (statusColor)
+    {
+    case 2:
+        return "Verde [High/Medium]";
+        break;
+    case 4:
+        return "Vermelho [Critical]";
+        break;
+    case 6:
+        return "Amarelo [Low]";
+        break;
+    default:
+        return "Unknown";   //se mudarem o LED manualmente para outras cores
+        break;
+    }
+
+}
 void setStatusLedColor(int *red, int *green, int *blue) {
     if(*red>1 || *red<0 || *green>1 || *green<0 || *blue>1 || *blue<0) return;
 
@@ -147,6 +196,9 @@ void setStatusLedColor(int *red, int *green, int *blue) {
     *r0 |= (*green > 0.5) << 11;
     *r0 |= (*red > 0.5) << 12;  
 }
+
+
+
 
 //  FUNÇÕES DO R1/R2
 void getDisplayColor(uint8_t *r, uint8_t *g, uint8_t *b) {

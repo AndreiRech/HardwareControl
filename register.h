@@ -18,6 +18,7 @@ int registers_release(void* map, int file_size, int fd);
 // DEFINIÇÃO DAS FUNÇÕES [ R0 ]
 // DisplayOn
 uint16_t getDisplayOn();
+const char* convertedGetDisplayOn();
 void setDisplayOn(int v);
 
 // DisplayMode
@@ -27,14 +28,17 @@ void setDisplayMode(int mode);
 
 // DisplaySpeed
 uint16_t getDisplaySpeed();
+const char* convertedGetDisplaySpeed();
 void setDisplaySpeed(int speed);
 
 // OperationLedOn
-uint16_t getOperationLedOnOff();
-void setOperationLedOnOff(int v);
+uint16_t getOperationLedOn();
+const char* convertedGetOperationLedOn();
+void setOperationLedOn(int v);
 
 // StatusLedColor
 uint16_t getStatusLedColor();
+const char* convertedGetStatusLedColor();
 void setStatusLedColor(int *red, int *green, int *blue);
 
 // ResetRegisters

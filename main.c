@@ -25,13 +25,13 @@ void menuR0() {
     printf("\n ---------- [ MENU - R0 ] ---------- \n");
     printf("Informe o que deseja fazer: \n");
     printf("1 → Ligar/Desligar display\n");
-    printf("2 → Verificar situacao do display\n");
+    printf("2 → Verificar situacao do display [On/Off]\n");
     printf("3 → Trocar modo do display\n");
     printf("4 → Verificar modo do display\n");
     printf("5 → Alterar velocidade da mensagem\n");
     printf("6 → Verificar velocidade da mensagem\n");
     printf("7 → Ligar/Desligar led de operação\n");
-    printf("8 → Verificar situacao led de operacao\n");
+    printf("8 → Verificar situacao led de operacao [On/Off]\n");
     printf("9 → Alterar cor do led de status\n");
     printf("10 → Verificar cor led de status\n");
     printf("11 → Sair\n");
@@ -40,9 +40,9 @@ void menuR0() {
 void menuR3() {
     printf("\n ---------- [ MENU - R3 ] ---------- \n");
     printf("Informe o que deseja fazer: \n");
-    printf("1 → Mudar nível de bateria (indisponível)\n");
+    printf("1 → Mudar nível de bateria [indisponível]\n");
     printf("2 → Verificar nível de bateria\n");
-    printf("3 → Mudar temperatura (indisponível)\n");
+    printf("3 → Mudar temperatura [indisponível]\n");
     printf("4 → Verificar temperatura\n");
     printf("5 → Verificar quantidade de repetições\n");
     printf("6 → Resetar quantidade de repetições\n");
@@ -63,6 +63,7 @@ void funcR0() {
                 setDisplayOn(value);
                 break;
             case 2: //verificar situacao do display
+                printf("Situação do Display: %s\n", convertedGetDisplayOn());
                 break;
             case 3: //alterar modo do display
                 printf("\nSelecione o modo de exibição: \n");
@@ -79,13 +80,15 @@ void funcR0() {
                 setDisplaySpeed(value);
                 break;
             case 6: //verificar velocidade da mensagem 
+                printf("Velocidade do display: %s\n", convertedGetDisplaySpeed());
                 break;
             case 7: //ligar/desligar led de operacao
                 printf("\nDeseja ligar [1] ou desligar [0]?\n");
                 scanf("%d", &value);
-                setOperationLedOnOff(value);
+                setOperationLedOn(value);
                 break;
             case 8: //verificar situacao led de operacao
+                printf("Situação Led Operação: %s\n", convertedGetOperationLedOn());
                 break;
             case 9: //alterar cor led de status
                 int red, green, blue;
@@ -99,6 +102,7 @@ void funcR0() {
                 setStatusLedColor(&red, &green, &blue);  
                 break;
             case 10: //verificar cor led de status
+                printf("Cor LED Status: %s\n", convertedGetStatusLedColor());    
                 break;
             case 11: printf("\nSaindo...\n"); break;
             default: printf("\nInforme uma opção válida!\n"); break;
