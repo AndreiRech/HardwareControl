@@ -11,6 +11,10 @@
 
 #define FILE_PATH "registers.bin"
 #define FILE_SIZE 1024
+#define NUM_REGISTERS 16
+
+extern unsigned short *reg[NUM_REGISTERS];
+extern unsigned short *base_address;
 
 char* registers_map(const char* file_path, int file_size, int* fd);
 int registers_release(void* map, int file_size, int fd);
