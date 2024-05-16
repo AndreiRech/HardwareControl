@@ -8,33 +8,12 @@
 #include "register.h"
 #include <string.h>
 
-/*
-unsigned short *base_address = NULL;
-unsigned short *r0;
-unsigned short *r1;
-unsigned short *r2;
-unsigned short *r3;
-unsigned short *r4;
-unsigned short *r5;
-unsigned short *r6;
-unsigned short *r7;
-unsigned short *r8;
-unsigned short *r9;
-unsigned short *r10;
-unsigned short *r11;
-unsigned short *r12;
-unsigned short *r13;
-unsigned short *r14;
-unsigned short *r15;
-*/
-
 #define FILE_PATH "registers.bin"
 #define FILE_SIZE 1024
 #define NUM_REGISTERS 16
 
 unsigned short *reg[NUM_REGISTERS];
 unsigned short *base_address = NULL;
-
 
 char* registers_map(const char* file_path, int file_size, int* fd) {
     *fd = open(file_path, O_RDWR | O_CREAT, 0666);
@@ -55,26 +34,6 @@ char* registers_map(const char* file_path, int file_size, int* fd) {
         close(*fd);
         return NULL;
     }
-
-    /*
-    base_address = (unsigned short *)map;
-    r0 = base_address + 0x00;
-    r1 = base_address + 0x01;
-    r2 = base_address + 0x02;
-    r3 = base_address + 0x03;
-    r4 = base_address + 0x04;
-    r5 = base_address + 0x05;
-    r6 = base_address + 0x06;
-    r7 = base_address + 0x07;
-    r8 = base_address + 0x08;
-    r9 = base_address + 0x09;
-    r10 = base_address + 0x0a;
-    r11 = base_address + 0x0b;
-    r12 = base_address + 0x0c;
-    r13 = base_address + 0x0d;
-    r14 = base_address + 0x0e;
-    r15 = base_address + 0x0f;
-    */
 
     base_address = (unsigned short *)map;
 
@@ -105,20 +64,15 @@ uint16_t getDisplayOn() {return *reg[0] & 0x01;}
 const char* convertedGetDisplayOn(){
     int displayOn = getDisplayOn();
 
-    if (displayOn == 1)
-    {
+    if (displayOn == 1) {
         return "Display On";
     }
-    return "Display Off";
-
-    
+    return "Display Of";
 }
 void setDisplayOn(int v) {
     if(v > 1 || v < 0) return;
     *reg[0] = v ? (*reg[0] | 0x01) : (*reg[0] & ~0x01);
 }
-
-
 
 uint16_t getDisplayMode() {return (*reg[0] & 0x0006) >> 1;}   //0x0006 == 0000 0000 0000 0110
 
@@ -142,9 +96,26 @@ const char* convertedGetDisplayMode(){
             break;
     }
 }
-void setDisplayMode(int mode) {}
+void setDisplayMode(int mode) {
+    if(mode > 4 || mode < 1) return;
 
+    *r0 &= ~(0x3 << 1);
 
+    switch (mode) {
+        case 1: 
+            *reg[0] |= (0x0 << 1);
+            break;
+        case 2:
+            *reg[0] |= (0x1 << 1);
+            break;
+        case 3:
+            *reg[0] |= (0x2 << 1);
+            break;
+        case 4:
+            *reg[0] |= (0x3 << 1);
+            break;
+    }
+}
 
 uint16_t getDisplaySpeed() {return (*reg[0] >> 3) & 0x3F;}
 const char* convertedGetDisplaySpeed(){
@@ -162,8 +133,6 @@ void setDisplaySpeed(int speed) {
     *reg[0] |= (speed & 0x3F) << 3;
 }
 
-
-
 uint16_t getOperationLedOn() {return (*reg[0] >> 9) & 0x01;}
 const char* convertedGetOperationLedOn(){
     int operationLed = getOperationLedOn();
@@ -178,8 +147,6 @@ void setOperationLedOn(int v) {
     *reg[0] &= ~0x0200;
     *reg[0] |= (v << 9) & 0x0200;
 }
-
-
 
 uint16_t getStatusLedColor() {return (*reg[0] >> 10) & 0x07;}
 const char* convertedGetStatusLedColor(){
@@ -212,9 +179,6 @@ void setStatusLedColor(int *r, int *g, int *b) {
     *reg[0] |= (*r > 0.5) << 12;  
 }
 
-
-
-
 //  FUNÇÕES DO R1/R2
 void getDisplayColor(uint8_t *r, uint8_t *g, uint8_t *b) {
     *r = *reg[1] & 0xFF;
@@ -229,9 +193,7 @@ void setDisplayColor(uint8_t r, uint8_t g, uint8_t b) {
 }
 
 //  FUNÇÕES DO R3
-uint16_t getBatteryLevel(){
-    return *reg[3] & 0x3;
-}
+uint16_t getBatteryLevel(){return *reg[3] & 0x3;}
 
 const char* convertedGetBatteryLevel() {
     int batteryLevel = getBatteryLevel();
@@ -256,8 +218,6 @@ const char* convertedGetBatteryLevel() {
     }
 
     return batteryString;
- 
-
 }
 
 void setBatteryLevel(uint16_t batteryLevel) {
@@ -291,7 +251,6 @@ void setBatteryLevel(uint16_t batteryLevel) {
 }
 
 float getTemperature(){
-
     uint16_t maskedValue = (*reg[3] & 0xFFC0) >> 6;
 
     int signBit = maskedValue & 0x0200;     //0x0200 == 0000 0010 0000 0000 [bit 9]
@@ -300,25 +259,20 @@ float getTemperature(){
     int16_t temperature = (int16_t)(maskedValue & 0x01FF);    //0x01FF == 0000 0001 1111 1111
 
     if (signBit){
-        temperature |= 0xFE00;    //0xFE00 == 1111 1110 0000 0000
+       temperature |= 0xFE00;    //0xFE00 == 1111 1110 0000 0000
     }
     
     float tempFloat = (float)temperature/10;
 
     return tempFloat;
-    
-    
 }
 
 void setTemperature(int temperature){ 
     int16_t tempValue;
 
-    
     if( temperature >= 0 && temperature <= 999)
-    {
         tempValue = (int16_t)(temperature);
-    }
-    else{   //temperatura negativa
+    else {   //temperatura negativa
         tempValue = (int16_t)(-temperature);
         tempValue = ~tempValue + 1; //complemento de dois [inverte os bits e soma 1]
         tempValue |= 0x8000;    //0x8000 == 1000 0000 0000 0000 [adiciona bit de sinal]
@@ -329,6 +283,11 @@ void setTemperature(int temperature){
     *reg[3] |= (((uint16_t)tempValue) << 6) & 0xFFC0; //desloca tempValue para os bits 6-15 e faz um AND com a mascara, depois faz um OR com o registrador 
 }
 
+uint16_t getDisplayCount() {return (*reg[r3] >> 2) & 0xF;}
+void restartDisplayCount() {
+    *reg[r3] &= ~(0xF << 2);
+    *reg[r3] |= (0 & 0xF) << 2;
+};
 
 //  FUNÇÕES DO R4-R15
 void setDisplayString(const char *msg) {
@@ -342,4 +301,15 @@ void setDisplayString(const char *msg) {
 
 void resetDisplayString() {
     memset(reg[4], 0, 12 * sizeof(unsigned short));
+}
+
+void resetRegisters() {
+    setDisplayOn(1);
+    setDisplayMode(1);
+    setDisplaySpeed(2);
+    setOperationLedOn(1);
+    setDisplayColor(255,255,255);
+    setBatteryLevel(11);
+    restartDisplayCount();
+    setTemperature(250);
 }
