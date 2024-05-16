@@ -16,9 +16,8 @@ void menu() {
     printf("2 → Funções do r3\n");
     printf("3 → Mudar cor do display\n");
     printf("4 → Mudar mensagem do display\n");
-    printf("5 → Printar valores dos registradores\n");
-    printf("6 → Voltar registradores ao padrão\n");
-    printf("7 → Sair\n");
+    printf("5 → Voltar registradores ao padrão\n");
+    printf("6 → Sair\n");
 }
 
 void menuR0() {
@@ -67,12 +66,12 @@ void funcR0() {
                 break;
             case 3: //alterar modo do display
                 printf("\nSelecione o modo de exibição: \n");
-                printf("Estático [1]\nDeslizante [2]\nPiscante [3]\nDeslizante|Piscante [4]");
+                printf("\nEstático [1]\nDeslizante [2]\nPiscante [3]\nDeslizante|Piscante [4]\n");
                 scanf("%d", &value);
                 setDisplayMode(value);
                 break;
             case 4: //verificar modo do display
-                printf("Modo do display:%s\n", convertedGetDisplayMode());
+                printf("\nModo do display:%s\n", convertedGetDisplayMode());
                 break;
             case 5: 
                 printf("\nInforme a nova velocidade de exibição (Valores entre 0-63): ");
@@ -124,11 +123,9 @@ void funcR3() {
                 scanf("%d", &value);
                 setBatteryLevel(value);
                 break;
-
             case 2:
                 printf("\nNível de bateria: %s\n", convertedGetBatteryLevel());  
                 break;
-            
             case 3:
                 printf("\nInforme a temperatura em graus Celcius [terceira casa decimal para valor com virgula]:\n");
                 scanf("%d", &value);
@@ -137,8 +134,12 @@ void funcR3() {
             case 4:
                 printf("\nTemperatura : %.1f", getTemperature());
                 break;
-            
-
+            case 5:
+                printf("\nQuantidade de repetições: %d", getDisplayCount());
+                break;
+            case 6:
+                printf("\nQuantidade de repetições resetadas com sucesso!\n");
+                break;
             case 7: printf("\nSaindo...\n"); break;
             default: printf("\nInforme uma opção válida!\n"); break;
         }
@@ -165,7 +166,6 @@ void changeDisplay() {
 }
 
 void printReg() {printf("Sem nada ainda");}
-void resetReg() {printf("Sem nada ainda");}
 
 void opc() {
     int opc = 0;
@@ -179,12 +179,14 @@ void opc() {
             case 2: funcR3(); break;
             case 3: displayColor(); break;
             case 4: changeDisplay(); break;
-            case 5: printReg(); break;
-            case 6: resetReg(); break;
-            case 7: printf("\nSaindo...\n"); break;
+            case 5: 
+                resetRegisters(); 
+                printf("\nValores resetados com sucesso!\n");
+                break;
+            case 6: printf("\nSaindo...\n"); break;
             default: printf("\nInforme uma opção válida!\n"); break;
         }
-    } while(opc != 7);
+    } while(opc != 6);
 }
 
 int main() {
