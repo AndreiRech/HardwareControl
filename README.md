@@ -50,14 +50,14 @@ Aqui está a lista de a fazeres do trabalho.
 
 - [X] Liga/Desliga o display
 - [X] Verificar situacao do display         
-- [ ] Selecionar o modo de exibição
+- [X] Selecionar o modo de exibição
 - [X] verificar modo de exibicao            
 - [X] Define velocidade de atualização do display em valores múltiplos de 100 milisegundos para modo de exibição não estático
 - [X] verifica velocidade de atualizacao
 - [X] Liga/Desliga o LED de operação
 - [X] verifica situacao led de operacao     
 - [X] Liga/Desliga o LED de status e define cor
-- [ ] verifica cor led de status
+- [X] Verificar cor LED de status
 
 **REGISTRADOR 1/2**
 
@@ -66,11 +66,11 @@ Aqui está a lista de a fazeres do trabalho.
 **REGISTRADOR 3**
 
 - [X] Retornar nível da bateria
-- [X] Dewfinir nivel da bateria (opcional)
+- [X] Definir nivel da bateria (opcional)
 - [X] Retornar nível bateria
-- [] Mudar temperatura (opcional)
-- [ ] Verificar quantidade de repetições
-- [ ] Resetar quantidade de repetições
+- [ ] Mudar temperatura (opcional) - *implementada - verificar implementação do negativo*
+- [X] Verificar quantidade de repetições
+- [ ] Resetar quantidade de repetições - *implementada -  descobrir o motivo de não estar funcionando*
 
 **REGISTRADOR 4-15**
 
@@ -78,5 +78,4 @@ Aqui está a lista de a fazeres do trabalho.
 
 **AUXILIARES**
 
-- [ ] Printar valores de todos os registradores
-- [ ] Voltar registradores ao padrão  
+- [X] Voltar registradores ao padrão - *implementado - esperando a implementação da mudança da mensagem*
