@@ -62,9 +62,8 @@ const char* convertedGetBatteryLevel();
 void setBatteryLevel(uint16_t level);
 
 // DisplayCount
-int getDisplayCount();
+uint16_t getDisplayCount();
 void restartDisplayCount();
-void increaseDisplayCount();
 
 // Temperature
 float getTemperature();
