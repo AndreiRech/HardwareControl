@@ -11,6 +11,7 @@
 #define FILE_PATH "registers.bin"
 #define FILE_SIZE 1024
 #define NUM_REGISTERS 16
+#define MAX_STRING_LENGHT 1024
 
 unsigned short *reg[NUM_REGISTERS];
 unsigned short *base_address = NULL;
@@ -99,7 +100,7 @@ const char* convertedGetDisplayMode(){
 void setDisplayMode(int mode) {
     if(mode > 4 || mode < 1) return;
 
-    *r0 &= ~(0x3 << 1);
+    *reg[0] &= ~(0x3 << 1);
 
     switch (mode) {
         case 1: 
@@ -283,19 +284,41 @@ void setTemperature(int temperature){
     *reg[3] |= (((uint16_t)tempValue) << 6) & 0xFFC0; //desloca tempValue para os bits 6-15 e faz um AND com a mascara, depois faz um OR com o registrador 
 }
 
-uint16_t getDisplayCount() {return (*reg[r3] >> 2) & 0xF;}
+uint16_t getDisplayCount() {return (*reg[3] >> 2) & 0xF;}
 void restartDisplayCount() {
-    *reg[r3] &= ~(0xF << 2);
-    *reg[r3] |= (0 & 0xF) << 2;
+    *reg[3] &= ~(0xF << 2);
+    *reg[3] |= (0 & 0xF) << 2;
 };
 
 //  FUNÇÕES DO R4-R15
+
+void clearInputBuffer(){
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF);
+    
+}
+
+
 void setDisplayString(const char *msg) {
     int length = strlen(msg);  
     resetDisplayString();
 
     for (int i = 0; i < length; i++) {
-        *(reg[4] + i) = msg[i];
+        int reg_index = 4 + (i / 2);
+        //*(reg[4] + i) = msg[i];
+        if (reg_index >= NUM_REGISTERS)
+        {
+            break;  //excedeu o numero de registradores
+        }
+
+        if (i % 2 == 0)
+        {
+            *reg[reg_index] = (unsigned short)msg[i];
+        } else{
+            *reg[reg_index] |= (unsigned short)(msg[i] << 8);
+        }
+        
+        
     }
 }
 

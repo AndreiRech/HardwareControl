@@ -71,6 +71,9 @@ void setTemperature(int temperature);
 
 
 // DEFINIÇÃO DAS FUNÇÕES [ R4 - R15 ]
+//limpar buffer
+void clearInputBuffer();
+
 // DisplayString
 void setDisplayString(const char *msg);
 void resetDisplayString();

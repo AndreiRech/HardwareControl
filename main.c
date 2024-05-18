@@ -4,6 +4,7 @@
 #include <sys/mman.h>
 #include <unistd.h>
 #include <sys/stat.h>
+#include <string.h>
 #include "register.h"
 
 #define FILE_PATH "registers.bin"
@@ -137,9 +138,9 @@ void funcR3() {
             case 5:
                 printf("\nQuantidade de repetições: %d", getDisplayCount());
                 break;
-            case 6:
-                printf("\nQuantidade de repetições resetadas com sucesso!\n");
-                break;
+            //case 6:   
+            //    printf("\nQuantidade de repetições resetadas com sucesso!\n");
+            //    break;
             case 7: printf("\nSaindo...\n"); break;
             default: printf("\nInforme uma opção válida!\n"); break;
         }
@@ -161,7 +162,11 @@ void displayColor() {
 void changeDisplay() {
     char msg[100];
     printf("\nDigite a mensagem que deseja exibir no display: ");
-    scanf("%s", msg);
+
+    fgets(msg, sizeof(msg), stdin);      //lendo com 'fgets' para lidar com espaços
+
+    msg[strcspn(msg, "\n")] = '\0';     //remove caracteres de nova linha lido pelo fgets
+    //scanf("%s", msg);
     setDisplayString(msg);
 }
 
@@ -173,6 +178,7 @@ void opc() {
     do {
         menu();
         scanf("\n%d", &opc);
+        clearInputBuffer();     //limpa o buffer de entrada
 
         switch(opc) {
             case 1: funcR0(); break;
