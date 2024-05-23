@@ -70,7 +70,7 @@ Aqui está a lista de a fazeres do trabalho.
 - [X] Retornar nível bateria
 - [ ] Mudar temperatura (opcional) - *implementada - verificar implementação do negativo*
 - [X] Verificar quantidade de repetições
-- [ ] Resetar quantidade de repetições - *implementada -  descobrir o motivo de não estar funcionando*
+- [ ] Fazer o Makefile funcionar
 
 **REGISTRADOR 4-15**
 
