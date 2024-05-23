@@ -2,7 +2,7 @@
 
 - [Andrei Rech | 23102140](https://github.com/AndreiRech)  
 - [Eduardo Colla De Bastiani | 23106295](https://github.com/eduardo-de-bastiani)
-- [Mariah Backes Freire | ](https://github.com/mariahbf)
+- [Mariah Backes Freire | 23102560](https://github.com/mariahbf)
 
 # INTRODUÇÃO
 
