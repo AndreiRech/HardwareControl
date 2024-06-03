@@ -1,11 +1,11 @@
-CFLAGS = -Wall -02
+CC = gcc
+SRCS = main.c register.c
+EXEC = exec
 
-PROG = register
-FONTES = register.c
-OBJETOS = & (FONTES: .c=.o)
+all: $(EXEC)
 
-$(PROG): $(OBJETOS)
-	gcc $(CFLAGS) &(OBJETOS) -o $@
+$(EXEC):
+	$(CC) $(SRCS) -o $(EXEC)
 
 clean:
-	-@ rm -f $(OBJETOS) $(PROG)
+	rm -f $(EXEC)
