@@ -19,7 +19,7 @@ Biblioteca para Controle de Hardware Através de Registradores Mapeados em Memó
 Para podermos editar o projeto, é necessário abrir o terminal e digitar:
 
 ```bash
-    gcc main.c register.c -o exec
+    make
 ```
 
 ```bash
@@ -30,6 +30,12 @@ Em outro terminal, acesse o emulador, utilizando:
 
 ```bash
     ./emulator
+```
+
+Após ter termiado, utilize o comando abaixo para limpar os arquivos criados:
+
+```bash
+    make clean
 ```
 
 *Toda vez que fizer alguma alteração deve refazer os primeiros dois passos para mostrar no terminal*
@@ -68,14 +74,14 @@ Aqui está a lista de a fazeres do trabalho.
 - [X] Retornar nível da bateria
 - [X] Definir nivel da bateria (opcional)
 - [X] Retornar nível bateria
-- [ ] Mudar temperatura (opcional) - *implementada - verificar implementação do negativo*
+- [X] Mudar temperatura (opcional) - *implementada - verificar implementação do negativo*
 - [X] Verificar quantidade de repetições
-- [ ] Fazer o Makefile funcionar
+- [X] Fazer o Makefile funcionar
 
 **REGISTRADOR 4-15**
 
-- [ ] Mudar mensagem do display
+- [X] Mudar mensagem do display - *implementado - implementando com mais de 24 caracteres*
 
 **AUXILIARES**
 
-- [X] Voltar registradores ao padrão - *implementado - esperando a implementação da mudança da mensagem*
+- [X] Voltar registradores ao padrão
