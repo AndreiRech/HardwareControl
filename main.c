@@ -182,11 +182,34 @@ void changeDisplay() {
     char msg[100];
     printf("\nDigite a mensagem que deseja exibir no display: ");
 
-    fgets(msg, sizeof(msg), stdin);      //lendo com 'fgets' para lidar com espaços
+    fgets(msg, sizeof(msg), stdin);
 
-    msg[strcspn(msg, "\n")] = '\0';     //remove caracteres de nova linha lido pelo fgets
-    //scanf("%s", msg);
-    setDisplayString(msg);
+    msg[strcspn(msg, "\n")] = '\0';
+
+    int length = strlen(msg);
+
+    if (length <= 24) {
+        setDisplayString(msg);
+    }
+    else {
+        char first[25]; 
+        char second[length - 24 + 1];
+
+        strncpy(first, msg, 24);
+        first[24] = '\0';
+
+        strncpy(second, msg + 24, length - 24);
+        second[length - 24] = '\0';
+
+        printf("Parte 1: %s\n", first);
+        printf("Parte 2: %s\n", second);
+        for(int i=0; i<48; i++){
+            resetDisplayString();
+            setDisplayString(first);
+            resetDisplayString();
+            setDisplayString(second);
+        } //Não Funciona :(
+    }
 }
 
 int main() {
