@@ -45,8 +45,7 @@ void menuR3() {
     printf("3 → Mudar temperatura [indisponível]\n");
     printf("4 → Verificar temperatura\n");
     printf("5 → Verificar quantidade de repetições\n");
-    printf("6 → Resetar quantidade de repetições\n");
-    printf("7 → Sair\n");
+    printf("6 → Sair\n");
 }
 
 void funcR0() {
@@ -63,16 +62,16 @@ void funcR0() {
                 setDisplayOn(value);
                 break;
             case 2: //verificar situacao do display
-                printf("Situação do Display: %s\n", convertedGetDisplayOn());
+                printf("\nSituação do Display: %s\n", convertedGetDisplayOn());
                 break;
             case 3: //alterar modo do display
                 printf("\nSelecione o modo de exibição: \n");
-                printf("\nEstático [1]\nDeslizante [2]\nPiscante [3]\nDeslizante|Piscante [4]\n");
+                printf("\nEstático [1]\t Deslizante [2]\t Piscante [3]\t Deslizante/Piscante [4]\n");
                 scanf("%d", &value);
                 setDisplayMode(value);
                 break;
             case 4: //verificar modo do display
-                printf("\nModo do display:%s\n", convertedGetDisplayMode());
+                printf("\nModo do display: %s\n", convertedGetDisplayMode());
                 break;
             case 5: 
                 printf("\nInforme a nova velocidade de exibição (Valores entre 0-63): ");
@@ -80,7 +79,7 @@ void funcR0() {
                 setDisplaySpeed(value);
                 break;
             case 6: //verificar velocidade da mensagem 
-                printf("Velocidade do display: %s\n", convertedGetDisplaySpeed());
+                printf("\nVelocidade do display: %s\n", convertedGetDisplaySpeed());
                 break;
             case 7: //ligar/desligar led de operacao
                 printf("\nDeseja ligar [1] ou desligar [0]?\n");
@@ -88,7 +87,7 @@ void funcR0() {
                 setOperationLedOn(value);
                 break;
             case 8: //verificar situacao led de operacao
-                printf("Situação Led Operação: %s\n", convertedGetOperationLedOn());
+                printf("\nSituação Led Operação: %s\n", convertedGetOperationLedOn());
                 break;
             case 9: //alterar cor led de status
                 int red, green, blue;
@@ -102,7 +101,7 @@ void funcR0() {
                 setStatusLedColor(&red, &green, &blue);  
                 break;
             case 10: //verificar cor led de status
-                printf("Cor LED Status: %s\n", convertedGetStatusLedColor());    
+                printf("\nCor LED Status: %s\n", convertedGetStatusLedColor());    
                 break;
             case 11: printf("\nSaindo...\n"); break;
             default: printf("\nInforme uma opção válida!\n"); break;
@@ -133,18 +132,38 @@ void funcR3() {
                 setTemperature(value);
                 break;
             case 4:
-                printf("\nTemperatura : %.1f", getTemperature());
+                printf("\nTemperatura : %.1f\n", getTemperature());
                 break;
             case 5:
-                printf("\nQuantidade de repetições: %d", getDisplayCount());
+                printf("\nQuantidade de repetições: %d\n", getDisplayCount());
                 break;
-            //case 6:   
-            //    printf("\nQuantidade de repetições resetadas com sucesso!\n");
-            //    break;
-            case 7: printf("\nSaindo...\n"); break;
+            case 6: printf("\nSaindo...\n"); break;
             default: printf("\nInforme uma opção válida!\n"); break;
         }
-    } while (opc != 7);
+    } while (opc != 6);
+}
+
+void opc() {
+    int opc = 0;
+
+    do {
+        menu();
+        scanf("\n%d", &opc);
+        clearInputBuffer();     //limpa o buffer de entrada
+
+        switch(opc) {
+            case 1: funcR0(); break;
+            case 2: funcR3(); break;
+            case 3: displayColor(); break;
+            case 4: changeDisplay(); break;
+            case 5: 
+                resetRegisters(); 
+                printf("\nValores resetados com sucesso!\n");
+                break;
+            case 6: printf("\nSaindo...\n"); break;
+            default: printf("\nInforme uma opção válida!\n"); break;
+        }
+    } while(opc != 6);
 }
 
 void displayColor() {
@@ -168,31 +187,6 @@ void changeDisplay() {
     msg[strcspn(msg, "\n")] = '\0';     //remove caracteres de nova linha lido pelo fgets
     //scanf("%s", msg);
     setDisplayString(msg);
-}
-
-void printReg() {printf("Sem nada ainda");}
-
-void opc() {
-    int opc = 0;
-
-    do {
-        menu();
-        scanf("\n%d", &opc);
-        clearInputBuffer();     //limpa o buffer de entrada
-
-        switch(opc) {
-            case 1: funcR0(); break;
-            case 2: funcR3(); break;
-            case 3: displayColor(); break;
-            case 4: changeDisplay(); break;
-            case 5: 
-                resetRegisters(); 
-                printf("\nValores resetados com sucesso!\n");
-                break;
-            case 6: printf("\nSaindo...\n"); break;
-            default: printf("\nInforme uma opção válida!\n"); break;
-        }
-    } while(opc != 6);
 }
 
 int main() {
