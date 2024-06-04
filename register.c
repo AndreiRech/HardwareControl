@@ -285,10 +285,6 @@ void setTemperature(int temperature){
 }
 
 uint16_t getDisplayCount() {return (*reg[3] >> 2) & 0xF;}
-void restartDisplayCount() {
-    *reg[3] &= ~(0xF << 2);
-    *reg[3] |= (0 & 0xF) << 2;
-};
 
 //  FUNÇÕES DO R4-R15
 
@@ -333,6 +329,5 @@ void resetRegisters() {
     setOperationLedOn(1);
     setDisplayColor(255,255,255);
     setBatteryLevel(11);
-    restartDisplayCount();
     setTemperature(250);
 }

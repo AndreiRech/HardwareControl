@@ -63,7 +63,6 @@ void setBatteryLevel(uint16_t level);
 
 // DisplayCount
 uint16_t getDisplayCount();
-void restartDisplayCount();
 
 // Temperature
 float getTemperature();
@@ -77,10 +76,5 @@ void clearInputBuffer();
 // DisplayString
 void setDisplayString(const char *msg);
 void resetDisplayString();
-
-
-// DEFINIÇÃO DE FUNÇÕES AUXILIARES
-// PrintRegisterValues
-void registersValues();
 
 #endif
