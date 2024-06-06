@@ -10,6 +10,15 @@
 #define FILE_PATH "registers.bin"
 #define FILE_SIZE 1024
 
+void displayColor();
+void changeDisplay();
+void menu();
+void menuR0();
+void menuR3();
+void funcR0();
+void funcR3();
+void opc();
+
 void menu() {
     printf("\n ---------- [ MENU ] ---------- \n");
     printf("Informe a operação a ser realizada: \n");
@@ -182,35 +191,35 @@ void changeDisplay() {
     char msg[100];
     printf("\nDigite a mensagem que deseja exibir no display: ");
 
-    fgets(msg, sizeof(msg), stdin);
-
+    fgets(msg, sizeof(msg), stdin);  
     msg[strcspn(msg, "\n")] = '\0';
 
     int length = strlen(msg);
 
     if (length <= 24) {
         setDisplayString(msg);
+    } else {
+        for (int i=0; i<2; i++) {
+            length = strlen(msg);
+            int tamanho = 24;
+            int offset = 0;
+
+            while (offset < length) {
+                char displayParte[tamanho + 1];
+                strncpy(displayParte, msg + offset, tamanho);
+                displayParte[tamanho] = '\0';
+
+                setDisplayString(displayParte);
+                sleep(5);
+
+                offset += tamanho;
+            }
+        }
+        char msg[20] = "Repeticoes Acabaram";
+
+        setDisplayString(msg);
     }
-    else {
-        char first[25]; 
-        char second[length - 24 + 1];
-
-        strncpy(first, msg, 24);
-        first[24] = '\0';
-
-        strncpy(second, msg + 24, length - 24);
-        second[length - 24] = '\0';
-
-        printf("Parte 1: %s\n", first);
-        printf("Parte 2: %s\n", second);
-        for(int i=0; i<48; i++){
-            resetDisplayString();
-            setDisplayString(first);
-            resetDisplayString();
-            setDisplayString(second);
-        } //Não Funciona :(
-    }
-}
+} 
 
 int main() {
     int fd;
