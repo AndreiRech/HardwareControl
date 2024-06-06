@@ -209,8 +209,16 @@ void changeDisplay() {
                 strncpy(displayParte, msg + offset, tamanho);
                 displayParte[tamanho] = '\0';
 
+                char speedChar[7];
+                strncpy(speedChar, convertedGetDisplaySpeed(), 7);
+                int speed = atoi(speedChar);
+
+                float tempo = (speed/100) * (strlen(displayParte) / 2.56);
+                printf("tempo: %.2f\n", tempo);
+
                 setDisplayString(displayParte);
-                sleep(5);
+
+                sleep(tempo);
 
                 offset += tamanho;
             }
