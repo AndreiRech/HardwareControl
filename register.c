@@ -294,29 +294,20 @@ void clearInputBuffer(){
     
 }
 
-
 void setDisplayString(const char *msg) {
     int length = strlen(msg);  
     resetDisplayString();
 
     for (int i = 0; i < length; i++) {
         int reg_index = 4 + (i / 2);
-        //*(reg[4] + i) = msg[i];
-        if (reg_index >= NUM_REGISTERS)
-        {
-            break;  //excedeu o numero de registradores
-        }
 
-        if (i % 2 == 0)
-        {
+        if (i % 2 == 0) {
             *reg[reg_index] = (unsigned short)msg[i];
         } else{
             *reg[reg_index] |= (unsigned short)(msg[i] << 8);
         }
-        
-        
     }
-}
+} 
 
 void resetDisplayString() {
     memset(reg[4], 0, 12 * sizeof(unsigned short));
