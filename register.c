@@ -75,7 +75,7 @@ void setDisplayOn(int v) {
     *reg[0] = v ? (*reg[0] | 0x01) : (*reg[0] & ~0x01);
 }
 
-uint16_t getDisplayMode() {return (*reg[0] & 0x0006) >> 1;}   //0x0006 == 0000 0000 0000 0110
+uint16_t getDisplayMode() {return (*reg[0] & 0x0006) >> 1;}
 
 const char* convertedGetDisplayMode(){
     int displayMode = getDisplayMode();
@@ -122,7 +122,7 @@ uint16_t getDisplaySpeed() {return (*reg[0] >> 3) & 0x3F;}
 const char* convertedGetDisplaySpeed(){
     int displaySpeed = getDisplaySpeed();
 
-    static char displaySpeedString[7];  //aceita no maximo 5 caracteres + 'ms'
+    static char displaySpeedString[7];
 
     snprintf(displaySpeedString, sizeof(displaySpeedString), "%d ms", displaySpeed * 100);
 
@@ -151,7 +151,6 @@ void setOperationLedOn(int v) {
 
 uint16_t getStatusLedColor() {return (*reg[0] >> 10) & 0x07;}
 const char* convertedGetStatusLedColor(){
-    // 4 - vermelho     2 - verde  //6 - amarelo
     int statusColor = getStatusLedColor();
 
     switch (statusColor)
@@ -166,7 +165,7 @@ const char* convertedGetStatusLedColor(){
         return "Amarelo [Low]";
         break;
     default:
-        return "Unknown";   //se mudarem o LED manualmente para outras cores
+        return "Unknown"; 
         break;
     }
 
@@ -180,7 +179,12 @@ void setStatusLedColor(int *r, int *g, int *b) {
     *reg[0] |= (*r > 0.5) << 12;  
 }
 
+void resetRegisters() {
+    *reg[0] |= (1 << 13);
+}
+
 //  FUNÇÕES DO R1/R2
+
 void getDisplayColor(uint8_t *r, uint8_t *g, uint8_t *b) {
     *r = *reg[1] & 0xFF;
     *g = (*reg[1] >> 8) & 0xFF;
@@ -194,6 +198,7 @@ void setDisplayColor(uint8_t r, uint8_t g, uint8_t b) {
 }
 
 //  FUNÇÕES DO R3
+
 uint16_t getBatteryLevel(){return *reg[3] & 0x3;}
 
 const char* convertedGetBatteryLevel() {
@@ -254,13 +259,12 @@ void setBatteryLevel(uint16_t batteryLevel) {
 float getTemperature(){
     uint16_t maskedValue = (*reg[3] & 0xFFC0) >> 6;
 
-    int signBit = maskedValue & 0x0200;     //0x0200 == 0000 0010 0000 0000 [bit 9]
+    int signBit = maskedValue & 0x0200;
 
-    //converte o valor para int16_t [lida com valores negativos em complemento de 2]
-    int16_t temperature = (int16_t)(maskedValue & 0x01FF);    //0x01FF == 0000 0001 1111 1111
+    int16_t temperature = (int16_t)(maskedValue & 0x01FF);
 
     if (signBit){
-       temperature |= 0xFE00;    //0xFE00 == 1111 1110 0000 0000
+       temperature |= 0xFE00;
     }
     
     float tempFloat = (float)temperature/10;
@@ -273,15 +277,15 @@ void setTemperature(int temperature){
 
     if( temperature >= 0 && temperature <= 999)
         tempValue = (int16_t)(temperature);
-    else {   //temperatura negativa
+    else {   // Temperatura negativa
         tempValue = (int16_t)(-temperature);
-        tempValue = ~tempValue + 1; //complemento de dois [inverte os bits e soma 1]
-        tempValue |= 0x8000;    //0x8000 == 1000 0000 0000 0000 [adiciona bit de sinal]
+        tempValue = ~tempValue + 1; // Complemento de dois [inverte os bits e soma 1]
+        tempValue |= 0x8000;
     }
 
-    *reg[3] &= ~(0xFFC0); //0xFFC0 == 1111 1111 1100 0000 [limpando bits 6-15]
+    *reg[3] &= ~(0xFFC0); 
 
-    *reg[3] |= (((uint16_t)tempValue) << 6) & 0xFFC0; //desloca tempValue para os bits 6-15 e faz um AND com a mascara, depois faz um OR com o registrador 
+    *reg[3] |= (((uint16_t)tempValue) << 6) & 0xFFC0;
 }
 
 uint16_t getDisplayCount() {return (*reg[3] >> 2) & 0xF;}
@@ -311,14 +315,4 @@ void setDisplayString(const char *msg) {
 
 void resetDisplayString() {
     memset(reg[4], 0, 12 * sizeof(unsigned short));
-}
-
-void resetRegisters() {
-    setDisplayOn(1);
-    setDisplayMode(1);
-    setDisplaySpeed(2);
-    setOperationLedOn(1);
-    setDisplayColor(255,255,255);
-    setBatteryLevel(11);
-    setTemperature(250);
 }
